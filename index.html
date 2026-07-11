@@ -5,12 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ładowanie...</title>
 
-    <script>
-        setTimeout(() => {
-            window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-        }, 2000);
-    </script>
-
     <style>
         body {
             margin: 0;
@@ -42,13 +36,49 @@
                 transform: rotate(360deg);
             }
         }
+
+        .video-container {
+            display: none;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-container.active {
+            display: flex;
+        }
+
+        iframe {
+            width: 90vw;
+            height: 90vh;
+            max-width: 900px;
+            max-height: 600px;
+            border: none;
+        }
     </style>
 </head>
 <body>
-    <div class="loader">
+    <div class="loader" id="loader">
         <div class="spinner"></div>
         <h2>Ładowanie...</h2>
         <p>Proszę czekać.</p>
     </div>
+
+    <div class="video-container" id="videoContainer">
+        <iframe 
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" 
+            frameborder="0" 
+            allow="autoplay; encrypted-media" 
+            allowfullscreen>
+        </iframe>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('videoContainer').classList.add('active');
+        }, 2000);
+    </script>
 </body>
 </html>
