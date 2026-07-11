@@ -1,1 +1,1 @@
-im making random things on LoT
+im making random things on IoT
