@@ -17,36 +17,12 @@
             color: white;
         }
 
-        .loader {
-            text-align: center;
-        }
-
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 6px solid #444;
-            border-top: 6px solid #09f;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
         .video-container {
-            display: none;
             width: 100%;
             height: 100%;
+            display: flex;
             justify-content: center;
             align-items: center;
-        }
-
-        .video-container.active {
-            display: flex;
         }
 
         iframe {
@@ -59,15 +35,10 @@
     </style>
 </head>
 <body>
-    <div class="loader" id="loader">
-        <div class="spinner"></div>
-        <h2>Ładowanie...</h2>
-        <p>Proszę czekać.</p>
-    </div>
-
     <div class="video-container" id="videoContainer">
         <iframe 
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" 
+            id="rickVideo"
+            src="" 
             frameborder="0" 
             allow="autoplay; encrypted-media" 
             allowfullscreen>
@@ -75,10 +46,36 @@
     </div>
 
     <script>
-        setTimeout(() => {
-            document.getElementById('loader').style.display = 'none';
-            document.getElementById('videoContainer').classList.add('active');
-        }, 2000);
+        function startRickroll() {
+            const container = document.getElementById('videoContainer');
+            const video = document.getElementById('rickVideo');
+            video.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=0&rel=0&controls=1';
+            
+            setTimeout(() => {
+                if (container.requestFullscreen) {
+                    container.requestFullscreen().catch(() => {});
+                } else if (container.webkitRequestFullscreen) {
+                    container.webkitRequestFullscreen();
+                } else if (container.mozRequestFullScreen) {
+                    container.mozRequestFullScreen();
+                } else if (container.msRequestFullscreen) {
+                    container.msRequestFullscreen();
+                }
+            }, 100);
+        }
+
+        // Start rickroll zaraz po załadowaniu
+        window.addEventListener('load', startRickroll);
+
+        // Próba fullscreen na każdy ESC
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+                const container = document.getElementById('videoContainer');
+                if (container.requestFullscreen) {
+                    container.requestFullscreen().catch(() => {});
+                }
+            }
+        });
     </script>
 </body>
 </html>
